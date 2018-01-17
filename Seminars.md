@@ -200,3 +200,6 @@ tibble(x = sampleMeans) %>%
 ```
 
 ![](Seminars_files/figure-html/Part 3-2.png)<!-- -->
+
+#Conslusion
+###The central limit theorem holds up more poorly with smaller sample sizes as the distribution appears less normally distributed and the curve less smooth. At smaller sample sizes the variation among samples is larger and the sample mean deviates from the population mean. By increasing sample size, the curve becomes smoother and approaches the shape of a normal distribution. As you can see in the last graph, once sample size is decreased from 100 to 5, the mean appears at 0.7 instead of 1.0.
