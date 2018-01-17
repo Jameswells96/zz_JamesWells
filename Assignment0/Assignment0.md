@@ -176,7 +176,7 @@ library(tidyverse)
 
 ```r
 ToothData = read.table("https://raw.githubusercontent.com/STAT540-UBC/STAT540-UBC.github.io/master/homework/practice_assignment/guinea_pigs_tooth_growth.txt", header = TRUE) #This read.table function is loading the data from a website
-str(ToothData) #
+str(ToothData) #Showing a short summary of the ToothData
 ```
 
 ```
@@ -199,5 +199,5 @@ ggplot(data = ToothData) + #This str function helps us visualize the data in a c
 #Data Visualization Conclusion
 ### The graph type and parameters chosen displays the data in an informative way. I choose to display the guinea pig tooth growth data in a bar graph to provide a comparative view between two discrete variables; Odontoblast length and dosage of the supplement. The fill parameter was used to further differentiate between the third variable, the two supplements used; orange juice and vitamin C (absorbic acid) and displayed side by side using the position parameter for easy visual comparison. It can be determined by analyzing the bar graph that a steady increase in tooth growth can be seen as the dosage increased for each supplement. Additionally, vitamin C only showed a superior growth increase to orange juice at 2 mg/day and not for 0.5 and 1 mg/day.
 
-
+###Thanks - James Wells
 
