@@ -1,0 +1,64 @@
+---
+title: "Seminar3 - Take Home"
+author: "James Wells"
+date: "January 24, 2018"
+output:
+html_document: 
+    keep_md: yes
+
+---
+
+
+```{r}
+library(tidyverse)
+library(data.table)
+library(reshape2)
+library(GEOquery)
+
+gds = getGEO("GDS507")
+
+meta_data <- data.frame(Sample = gds@dataTable@columns$sample, disease = gds@dataTable@columns$disease.state)
+
+data = gds@dataTable@table
+
+
+
+melted_data <- melt(data, id.vars = c("ID_REF", "IDENTIFIER"), var = "Sample")
+head(melted_data)
+
+melted_data %>% 
+    group_by(Sample) %>% 
+    summarize(mean = mean(value))
+
+new_melted_data <- melted_data %>% 
+    group_by(Sample, IDENTIFIER) %>% 
+    summarize(Count = mean(value))
+
+data_with_chromosome = read.csv("https://raw.githubusercontent.com/STAT540-UBC/STAT540-UBC.github.io/master/seminars/seminars_winter_2017/Seminar3/biomart_output.csv", header = TRUE)
+
+full_data <- left_join(data_with_chromosome, meta_data, by = "Sample")
+
+full_data %>% 
+    group_by(disease) %>% 
+    filter(chromosome_name == "X") %>% 
+    summarize(mean = mean(Count))
+
+TTest = full_data %>% 
+    group_by(hgnc_symbol) %>% 
+    summarize( pvalue = t.test(Count ~ disease)$p.value)
+
+##A plot showing the T-test pvalues
+ggplot(TTest, aes(x=pvalue)) + 
+  geom_density()
+
+##Show a short list of the pvalues lower than 0.05
+TTest %>% 
+    filter(pvalue < 0.05) %>% 
+    head()
+
+##Extracting the gene with the lowest Pvalue
+TTest %>% 
+arrange(pvalue) %>% 
+    head(TTest, n = 1)
+
+```
